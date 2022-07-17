@@ -11,5 +11,6 @@ This application is used for sending emails from frontend without a server.
 
 
 ## Development
-This project uses [https://github.com/henriquebastos/python-decouple](python-decouple-3.6) for config  management.
+This project uses [https://github.com/henriquebastos/python-decouple](python-decouple-3.6) for config  management.  
 
+> Copy &nbsp; `env.sample` &nbsp; to &nbsp;`.env` &nbsp; and update the settings.
