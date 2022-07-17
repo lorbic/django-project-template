@@ -1,21 +1,51 @@
+from email.policy import default
 from pathlib import Path
-import os
+
+from decouple import config
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # Add extra '.parent' because I'm using directory based settings management
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
+# Environment variables
+ENV = config('MAILER_ENV', default='development', cast=str)
+DEBUG = config('MAILER_DEBUG', default=False, cast=bool)
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-u6doywq5epdvskn%t)df&n6^t9w7g_5svsix!2jn%4hx!mzt6%'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = config('MAILER_SECRET_KEY', default='$2b$12$H.uDdnSIoQ/5RkXq9HlDaO9uKQwq5epdvskn%t)dfqseM9z1EKldYa')
 
 ALLOWED_HOSTS = []
+extend_allowed_hosts = config('MAILER_ALLOWED_HOSTS', default='localhost, 127.0.0.1')
+if extend_allowed_hosts is not None:
+    # remove spaces around the host and add it to the allowed hosts
+    ALLOWED_HOSTS.extend(list(map(str.strip, extend_allowed_hosts.split(','))))
+
+# Email server setup
+MAILER_EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = config('MAILER_EMAIL_SERVER_HOST')
+EMAIL_PORT = config('MAILER_EMAIL_SERVER_PORT')
+EMAIL_USE_SSL = config('MAILER_EMAIL_SERVER_USE_TLS')
+EMAIL_HOST_USER = config('MAILER_EMAIL_USER')
+EMAIL_HOST_PASSWORD = config('MAILER_EMAIL_PASSWORD')
+DEFAULT_FROM_EMAIL = 'Vikash from MAILER <{}>'.format(EMAIL_HOST_USER)
+
+# Database server setup
+DB_NAME = config('MAILER_DB_NAME')
+DB_HOST = config('MAILER_DB_HOST')
+DB_PORT = config('MAILER_DB_PORT')
+DB_USERNAME = config('MAILER_DB_USERNAME')
+DB_PASSWORD = config('MAILER_DB_PASSWORD')
+DB_USE_EXTERNAL = config('MAILER_USE_EXTERNAL_DB', default=False, cast=bool)
+
+SHOW_STARTUP_DETAILS = config('MAILER_SHOW_STARTUP_DETAILS', default=False, cast=bool)
+
+if SHOW_STARTUP_DETAILS:
+    print("DEVELOPMENT SERVER STARTING...\n\tENV: {}\n\tDEBUG: {}".format(ENV, DEBUG))
+    print("EMAIL SERVER:\n\tHOST: {}\n\tPORT: {}".format(EMAIL_HOST, EMAIL_PORT))
+    print("\tUSER: {}\n\tSSL/TLS: {}".format(EMAIL_HOST_USER, EMAIL_USE_SSL))
+    print("DB SERVER:\n\tNAME: {}\n\tHOST: {}\n\tPORT: {}\n\tUSER: {}".format(DB_NAME, DB_HOST, DB_PORT, DB_USERNAME))
+    print("ALLOWED_HOSTS: ", ALLOWED_HOSTS)
+    print("\n")
 
 
 # Application definition
@@ -70,6 +100,15 @@ DATABASES = {
     }
 }
 
+if DB_USE_EXTERNAL:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': DB_NAME,
+        'USER': DB_USERNAME,
+        'PASSWORD': DB_PASSWORD,
+        'HOST': DB_HOST,
+        'PORT': DB_PORT,
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
