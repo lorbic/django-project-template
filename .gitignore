@@ -1,8 +1,9 @@
 # Cache
-**/__pycache__/**
+**/__pycache__
 
 # LocalDB
 db.sqlite3
 
 # Development Configurations
 .env
+.secrets
