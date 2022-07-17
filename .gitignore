@@ -1,0 +1,8 @@
+# Cache
+**/__pycache__/**
+
+# LocalDB
+db.sqlite3
+
+# Development Configurations
+.env
