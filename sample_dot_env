@@ -1,0 +1,33 @@
+# Environment Variables
+# False = disabled/built-in
+# True  = enable/external
+
+# print environment details when the app starts
+SHOW_STARTUP_DETAILS=True
+
+# development, production
+ENV=development
+DEBUG=False
+
+SECRET_KEY=
+
+# use ',' (comma) to split
+ALLOWED_HOSTS=127.0.0.1,localhost,192.168.1.1,appli.box
+
+
+# mailserver config
+EMAIL_USER=
+EMAIL_PASSWORD=
+EMAIL_SERVER_HOST=
+EMAIL_SERVER_PORT=
+EMAIL_SERVER_USE_TLS=
+
+
+# mariaDB on docker - local
+# Set to False to user built-in sqlite3 db
+USE_EXTERNAL_DB=False
+DB_NAME=djproj-db-docker
+DB_HOST=127.0.0.1
+DB_PORT=49153
+DB_USERNAME=
+DB_PASSWORD=

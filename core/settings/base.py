@@ -8,35 +8,35 @@ from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Environment variables
-ENV = config('MAILER_ENV', default='development', cast=str)
-DEBUG = config('MAILER_DEBUG', default=False, cast=bool)
+ENV = config('ENV', default='development', cast=str)
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-SECRET_KEY = config('MAILER_SECRET_KEY', default='$2b$12$H.uDdnSIoQ/5RkXq9HlDaO9uKQwq5epdvskn%t)dfqseM9z1EKldYa')
+SECRET_KEY = config('SECRET_KEY', default='$2b$12$H.uDdnSIoQ/5RkXq9HlDaO9uKQwq5epdvskn%t)dfqseM9z1EKldYa')
 
 ALLOWED_HOSTS = []
-extend_allowed_hosts = config('MAILER_ALLOWED_HOSTS', default='localhost, 127.0.0.1')
+extend_allowed_hosts = config('ALLOWED_HOSTS', default='localhost, 127.0.0.1')
 if extend_allowed_hosts is not None:
     # remove spaces around the host and add it to the allowed hosts
     ALLOWED_HOSTS.extend(list(map(str.strip, extend_allowed_hosts.split(','))))
 
 # Email server setup
-MAILER_EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = config('MAILER_EMAIL_SERVER_HOST')
-EMAIL_PORT = config('MAILER_EMAIL_SERVER_PORT')
-EMAIL_USE_SSL = config('MAILER_EMAIL_SERVER_USE_TLS')
-EMAIL_HOST_USER = config('MAILER_EMAIL_USER')
-EMAIL_HOST_PASSWORD = config('MAILER_EMAIL_PASSWORD')
-DEFAULT_FROM_EMAIL = 'Vikash from MAILER <{}>'.format(EMAIL_HOST_USER)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = config('EMAIL_SERVER_HOST')
+EMAIL_PORT = config('EMAIL_SERVER_PORT')
+EMAIL_USE_SSL = config('EMAIL_SERVER_USE_TLS')
+EMAIL_HOST_USER = config('EMAIL_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
+DEFAULT_FROM_EMAIL = '<{}>'.format(EMAIL_HOST_USER)
 
 # Database server setup
-DB_NAME = config('MAILER_DB_NAME')
-DB_HOST = config('MAILER_DB_HOST')
-DB_PORT = config('MAILER_DB_PORT')
-DB_USERNAME = config('MAILER_DB_USERNAME')
-DB_PASSWORD = config('MAILER_DB_PASSWORD')
-DB_USE_EXTERNAL = config('MAILER_USE_EXTERNAL_DB', default=False, cast=bool)
+DB_NAME = config('DB_NAME')
+DB_HOST = config('DB_HOST')
+DB_PORT = config('DB_PORT')
+DB_USERNAME = config('DB_USERNAME')
+DB_PASSWORD = config('DB_PASSWORD')
+DB_USE_EXTERNAL = config('USE_EXTERNAL_DB', default=False, cast=bool)
 
-SHOW_STARTUP_DETAILS = config('MAILER_SHOW_STARTUP_DETAILS', default=False, cast=bool)
+SHOW_STARTUP_DETAILS = config('SHOW_STARTUP_DETAILS', default=False, cast=bool)
 
 if SHOW_STARTUP_DETAILS:
     print("DEVELOPMENT SERVER STARTING...\n\tENV: {}\n\tDEBUG: {}".format(ENV, DEBUG))
