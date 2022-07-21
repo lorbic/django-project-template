@@ -37,5 +37,3 @@ python manage.py migrate
 ## Resources
 This project uses [python-decouple-3.6](https://github.com/henriquebastos/python-decouple) for configuration (environment variable) management.
 
-
-
