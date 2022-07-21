@@ -1,13 +1,11 @@
-# Mailer by Lorbic
+# Django-project-template by Lorbic
 
-This application is used for sending emails from frontend without a server.
+This repository is preconfigured django project with following features:
 
-1. Register in the website.
-2. Create application
-3. Define urls
-4. Copy your application id
-5. Create html contact form
-6. Point the form `action` to our api.
+1. Custom user model with `email` as default username field.
+2. Database server configuration.
+3. Email server configuration.
+4. Environment variables are managed using `.env` file.
 
 
 ## Development
